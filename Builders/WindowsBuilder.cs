@@ -38,28 +38,6 @@ namespace osu.Desktop.Deploy.Builders
             return new WindowsVelopackUploader(app_name, os_name, RuntimeIdentifier, channel, extraArgs: extraArgs);
         }
 
-        public override void Build()
-        {
-            RunDotnetPublish();
-
-            bool rcEditCommand =
-                Program.RunCommand("tools/rcedit-x64.exe", $"\"{Path.Combine(Program.StagingPath, "osu!.exe")}\""
-                                                           + $" --set-icon \"{IconPath}\"",
-                    exitOnFail: false);
-
-            if (!rcEditCommand)
-            {
-                // Retry again with wine
-                // TODO: Should probably change this to use RuntimeInfo.OS checks instead of fail values
-                bool wineRcEditCommand =
-                    Program.RunCommand("wine", $"\"{Path.GetFullPath("tools/rcedit-x64.exe")}\""
-                                               + $" \"{Path.Combine(Program.StagingPath, "osu!.exe")}\""
-                                               + $" --set-icon \"{IconPath}\"",
-                        exitOnFail: false);
-
-                if (!wineRcEditCommand)
-                    Logger.Error("Failed to set icon on osu!.exe");
-            }
-        }
+        public override void Build() => RunDotnetPublish();
     }
 }
