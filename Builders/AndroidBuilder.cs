@@ -20,7 +20,7 @@ namespace osu.Desktop.Deploy.Builders
         protected override string TargetFramework => "net8.0-android";
         protected override string RuntimeIdentifier => "android-arm64";
 
-        public override Uploader CreateUploader() => new GitHubUploader();
+        public override Uploader CreateUploader() => new GitHubUploader(Version);
 
         public override void Build()
         {

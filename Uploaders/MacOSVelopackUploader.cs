@@ -9,8 +9,8 @@ namespace osu.Desktop.Deploy.Uploaders
     {
         private readonly string channel;
 
-        public MacOSVelopackUploader(string applicationName, string operatingSystemName, string runtimeIdentifier, string channel, string? extraArgs = null, string? stagingPath = null)
-            : base(applicationName, operatingSystemName, runtimeIdentifier, channel, extraArgs, stagingPath)
+        public MacOSVelopackUploader(string version, string applicationName, string operatingSystemName, string runtimeIdentifier, string channel, string? extraArgs = null, string? stagingPath = null)
+            : base(version, applicationName, operatingSystemName, runtimeIdentifier, channel, extraArgs, stagingPath)
         {
             this.channel = channel;
         }

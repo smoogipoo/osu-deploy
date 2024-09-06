@@ -10,21 +10,22 @@ namespace osu.Desktop.Deploy.Uploaders
 {
     public class VelopackUploader : Uploader
     {
-        private readonly string applicationName;
-        private readonly string operatingSystemName;
-        private readonly string runtimeIdentifier;
-        private readonly string channel;
-        private readonly string? extraArgs;
-        private readonly string stagingPath;
+        protected readonly string ApplicationName;
+        protected readonly string OperatingSystemName;
+        protected readonly string RuntimeIdentifier;
+        protected readonly string Channel;
+        protected readonly string? ExtraArgs;
+        protected readonly string StagingPath;
 
-        public VelopackUploader(string applicationName, string operatingSystemName, string runtimeIdentifier, string channel, string? extraArgs = null, string? stagingPath = null)
+        public VelopackUploader(string version, string applicationName, string operatingSystemName, string runtimeIdentifier, string channel, string? extraArgs = null, string? stagingPath = null)
+            : base(version)
         {
-            this.applicationName = applicationName;
-            this.operatingSystemName = operatingSystemName;
-            this.runtimeIdentifier = runtimeIdentifier;
-            this.channel = channel;
-            this.extraArgs = extraArgs;
-            this.stagingPath = stagingPath ?? Program.StagingPath;
+            ApplicationName = applicationName;
+            OperatingSystemName = operatingSystemName;
+            RuntimeIdentifier = runtimeIdentifier;
+            Channel = channel;
+            ExtraArgs = extraArgs;
+            StagingPath = stagingPath ?? Program.StagingPath;
         }
 
         public override void RestoreBuild()
@@ -34,7 +35,7 @@ namespace osu.Desktop.Deploy.Uploaders
                 Program.RunCommand("dotnet", $"vpk download github"
                                              + $" --repoUrl=\"{Program.GitHubRepoUrl}\""
                                              + $" --token=\"{Program.GitHubAccessToken}\""
-                                             + $" --channel=\"{channel}\""
+                                             + $" --channel=\"{Channel}\""
                                              + $" --outputDir=\"{Program.ReleasesPath}\"",
                     throwIfNonZero: false,
                     useSolutionPath: false);
@@ -51,16 +52,16 @@ namespace osu.Desktop.Deploy.Uploaders
 
         protected virtual void Pack(string version)
         {
-            Program.RunCommand("dotnet", $"vpk [{operatingSystemName}] pack"
+            Program.RunCommand("dotnet", $"vpk [{OperatingSystemName}] pack"
                                          + $" --packTitle=\"osu!\""
                                          + $" --packId=\"{Program.PackageName}\""
                                          + $" --packVersion=\"{version}\""
-                                         + $" --runtime=\"{runtimeIdentifier}\""
+                                         + $" --runtime=\"{RuntimeIdentifier}\""
                                          + $" --outputDir=\"{Program.ReleasesPath}\""
-                                         + $" --mainExe=\"{applicationName}\""
-                                         + $" --packDir=\"{stagingPath}\""
-                                         + $" --channel=\"{channel}\""
-                                         + $" {extraArgs}",
+                                         + $" --mainExe=\"{ApplicationName}\""
+                                         + $" --packDir=\"{StagingPath}\""
+                                         + $" --channel=\"{Channel}\""
+                                         + $" {ExtraArgs}",
                 useSolutionPath: false);
         }
 
@@ -75,7 +76,7 @@ namespace osu.Desktop.Deploy.Uploaders
                                              + $" --tag=\"{version}\""
                                              + $" --releaseName=\"{version}\""
                                              + $" --merge"
-                                             + $" --channel=\"{channel}\"",
+                                             + $" --channel=\"{Channel}\"",
                     useSolutionPath: false);
             }
         }

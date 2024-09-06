@@ -5,6 +5,13 @@ namespace osu.Desktop.Deploy.Uploaders
 {
     public abstract class Uploader
     {
+        protected readonly string Version;
+
+        protected Uploader(string version)
+        {
+            Version = version;
+        }
+
         public abstract void RestoreBuild();
 
         public abstract void PublishBuild(string version);

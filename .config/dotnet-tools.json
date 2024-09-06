@@ -7,6 +7,12 @@
       "commands": [
         "vpk"
       ]
+    },
+    "sign": {
+      "version": "0.9.1-beta.24406.1",
+      "commands": [
+          "sign"
+      ]
     }
   }
 }

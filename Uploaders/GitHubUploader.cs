@@ -13,6 +13,11 @@ namespace osu.Desktop.Deploy.Uploaders
 {
     public class GitHubUploader : Uploader
     {
+        public GitHubUploader(string version)
+            : base(version)
+        {
+        }
+
         public override void RestoreBuild()
         {
         }

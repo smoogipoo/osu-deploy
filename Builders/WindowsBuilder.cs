@@ -32,10 +32,7 @@ namespace osu.Desktop.Deploy.Builders
                                + $" --icon=\"{installIcon}\""
                                + $" --noPortable";
 
-            if (!string.IsNullOrEmpty(Program.WindowsCodeSigningCertPath))
-                extraArgs += $" --signParams=\"/td sha256 /fd sha256 /f {Path.GetFullPath(Program.WindowsCodeSigningCertPath)} /p {codeSigningPassword} /tr http://timestamp.comodoca.com\"";
-
-            return new WindowsVelopackUploader(app_name, os_name, RuntimeIdentifier, channel, extraArgs: extraArgs);
+            return new WindowsVelopackUploader(Version, app_name, os_name, RuntimeIdentifier, channel, extraArgs: extraArgs);
         }
 
         public override void Build()

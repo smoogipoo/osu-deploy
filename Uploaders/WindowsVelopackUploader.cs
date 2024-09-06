@@ -7,10 +7,18 @@ namespace osu.Desktop.Deploy.Uploaders
     {
         private readonly string channel;
 
-        public WindowsVelopackUploader(string applicationName, string operatingSystemName, string runtimeIdentifier, string channel, string? extraArgs = null, string? stagingPath = null)
-            : base(applicationName, operatingSystemName, runtimeIdentifier, channel, extraArgs, stagingPath)
+        public WindowsVelopackUploader(string version, string applicationName, string operatingSystemName, string runtimeIdentifier, string channel, string? extraArgs = null,
+                                       string? stagingPath = null)
+            : base(version, applicationName, operatingSystemName, runtimeIdentifier, channel, extraArgs, stagingPath)
         {
             this.channel = channel;
+        }
+
+        protected override void Pack(string version)
+        {
+            Program.RunCommand("dotnet", $"sign {StagingPath}");
+            base.Pack(version);
+            Program.RunCommand("dotnet", $"sign {Program.ReleasesPath}");
         }
 
         protected override void Upload(string version)
