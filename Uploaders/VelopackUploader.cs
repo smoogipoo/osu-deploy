@@ -41,7 +41,15 @@ namespace osu.Desktop.Deploy.Uploaders
             }
         }
 
-        public override void PublishBuild(string version)
+        public sealed override void PublishBuild(string version)
+        {
+            Pack(version);
+
+            if (Program.CanGitHub && Program.GitHubUpload)
+                Upload(version);
+        }
+
+        protected virtual void Pack(string version)
         {
             Program.RunCommand("dotnet", $"vpk [{operatingSystemName}] pack"
                                          + $" --packTitle=\"osu!\""
@@ -54,7 +62,10 @@ namespace osu.Desktop.Deploy.Uploaders
                                          + $" --channel=\"{channel}\""
                                          + $" {extraArgs}",
                 useSolutionPath: false);
+        }
 
+        protected virtual void Upload(string version)
+        {
             if (Program.CanGitHub && Program.GitHubUpload)
             {
                 Program.RunCommand("dotnet", $"vpk upload github"

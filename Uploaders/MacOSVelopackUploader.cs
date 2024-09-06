@@ -15,9 +15,9 @@ namespace osu.Desktop.Deploy.Uploaders
             this.channel = channel;
         }
 
-        public override void PublishBuild(string version)
+        protected override void Upload(string version)
         {
-            base.PublishBuild(version);
+            base.Upload(version);
 
             string suffix;
 
