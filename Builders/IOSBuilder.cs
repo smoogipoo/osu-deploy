@@ -13,7 +13,7 @@ namespace osu.Desktop.Deploy.Builders
         {
         }
 
-        protected override string TargetFramework => "net8.0-ios";
+        protected override string TargetFramework => "net10.0-ios";
         protected override string RuntimeIdentifier => "ios-arm64";
 
         public override Uploader CreateUploader() => new GitHubUploader();

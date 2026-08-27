@@ -18,7 +18,7 @@ namespace osu.Desktop.Deploy.Builders
                 this.codeSigningPassword = codeSigningPassword ?? Program.ReadLineMasked("Enter code signing password: ");
         }
 
-        protected override string TargetFramework => "net8.0-android";
+        protected override string TargetFramework => "net10.0-android";
         protected override string RuntimeIdentifier => "android-arm64";
 
         public override Uploader CreateUploader() => new GitHubUploader();
